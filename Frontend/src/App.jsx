@@ -1,12 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router";
 
-function Login() {
-  return <h1>Login</h1>;
-}
-
-function Register() {
-  return <h1>Register</h1>;
-}
+import Register from "./pages/Register.jsx";
+import Login from "./pages/Login.jsx";
 
 function InterviewSetup() {
   return <h1>Interview Setup</h1>;
