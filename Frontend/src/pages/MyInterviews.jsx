@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import toast from "react-hot-toast";
 import api from "../services/api";
 
 const MyInterviews = () => {
@@ -12,7 +13,15 @@ const MyInterviews = () => {
   useEffect(() => {
     const getMyInterviews = async () => {
       try {
-        const { data } = await api.get("/interview/my-interviews");
+        const { data } = await toast.promise(
+          api.get("/interview/my-interviews"),
+          {
+            loading: "Loading your interviews...",
+            success: "Interviews loaded!",
+            error: (error) =>
+              error.response?.data?.message || "Failed to load interviews",
+          },
+        );
 
         setInterviews(data.interviews);
       } catch (error) {
@@ -38,6 +47,7 @@ const MyInterviews = () => {
       <div className="my-interviews-header">
         <div>
           <h1>My Interviews</h1>
+
           <p>Your mock interview history and progress.</p>
         </div>
 
@@ -82,6 +92,7 @@ const MyInterviews = () => {
 
                   <h3>
                     {interview.overallScore ?? "N/A"}
+
                     <span> / 10</span>
                   </h3>
 

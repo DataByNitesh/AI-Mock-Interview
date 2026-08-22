@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import toast from "react-hot-toast";
 import api from "../services/api";
 
 const InterviewSetup = () => {
@@ -28,10 +29,25 @@ const InterviewSetup = () => {
       setError("");
       setLoading(true);
 
-      const { data } = await api.post("/interview/create", {
+      const interviewRequest = api.post("/interview/create", {
         ...form,
         questionCount: Number(form.questionCount),
       });
+
+      const { data } = await toast.promise(
+        interviewRequest,
+        {
+          loading: "AI is preparing your interview...",
+          success: "Interview is ready!",
+          error: (error) =>
+            error.response?.data?.message || "Failed to prepare interview",
+        },
+        {
+          style: {
+            minWidth: "320px",
+          },
+        },
+      );
 
       navigate(`/interview/${data.interview._id}`);
     } catch (error) {

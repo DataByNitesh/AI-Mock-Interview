@@ -1,16 +1,23 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
+import toast from "react-hot-toast";
 import api from "../services/api";
 
 const Interview = () => {
   const { id } = useParams();
+
   const navigate = useNavigate();
 
   const [interview, setInterview] = useState(null);
+
   const [currentQuestion, setCurrentQuestion] = useState(0);
+
   const [answer, setAnswer] = useState("");
+
   const [loading, setLoading] = useState(true);
+
   const [submitting, setSubmitting] = useState(false);
+
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -33,6 +40,7 @@ const Interview = () => {
     window.speechSynthesis.cancel();
 
     const speech = new SpeechSynthesisUtterance(question);
+
     speech.rate = 0.9;
 
     window.speechSynthesis.speak(speech);
@@ -50,17 +58,20 @@ const Interview = () => {
 
   const moveToNextQuestion = () => {
     setAnswer("");
+
     setCurrentQuestion((prev) => prev + 1);
   };
 
   const handleSubmitAnswer = async () => {
     if (!answer.trim()) {
       setError("Please write an answer or skip the question.");
+
       return;
     }
 
     try {
       setSubmitting(true);
+
       setError("");
 
       await api.post(`/interview/${id}/answer`, {
@@ -70,6 +81,7 @@ const Interview = () => {
 
       if (currentQuestion === interview.Questions.length - 1) {
         await handleFinishInterview();
+
         return;
       }
 
@@ -84,6 +96,7 @@ const Interview = () => {
   const handleSkipQuestion = async () => {
     try {
       setSubmitting(true);
+
       setError("");
 
       await api.post(`/interview/${id}/skip`, {
@@ -92,6 +105,7 @@ const Interview = () => {
 
       if (currentQuestion === interview.Questions.length - 1) {
         await handleFinishInterview();
+
         return;
       }
 
@@ -106,13 +120,28 @@ const Interview = () => {
   const handleFinishInterview = async () => {
     try {
       setSubmitting(true);
+
       setError("");
 
-      await api.post(`/interview/${id}/finish`);
+      await toast.promise(
+        api.post(`/interview/${id}/finish`),
+        {
+          loading: "AI is analyzing your answers and generating your result...",
+          success: "Your interview result is ready!",
+          error: (error) =>
+            error.response?.data?.message ||
+            "Failed to generate interview result",
+        },
+        {
+          style: {
+            minWidth: "320px",
+          },
+        },
+      );
 
       window.speechSynthesis.cancel();
 
-      navigate("/my-interviews");
+      navigate(`/interview/${id}/result`);
     } catch (error) {
       setError(error.response?.data?.message || "Failed to finish interview");
     } finally {
