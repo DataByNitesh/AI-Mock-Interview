@@ -26,7 +26,6 @@ A full-stack AI-powered mock interview application that allows users to practice
 - React
 - React Router
 - Axios
-- Tailwind CSS
 - Web Speech API
 
 **Backend**
