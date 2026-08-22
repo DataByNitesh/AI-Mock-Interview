@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
-@import "tailwindcss";
+/* =========================
+   GLOBAL
+========================= */
 
 * {
   margin: 0;
@@ -12,7 +14,23 @@ body {
   min-height: 100vh;
   font-family: Arial, sans-serif;
   background: #f5f7fb;
+  color: #1d2939;
 }
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* =========================
+   AUTH
+========================= */
 
 .auth-container {
   min-height: 100vh;
@@ -25,18 +43,18 @@ body {
 .auth-form {
   width: 100%;
   max-width: 400px;
-  background: white;
-  padding: 40px;
-  border-radius: 12px;
   display: flex;
   flex-direction: column;
   gap: 15px;
+  padding: 40px;
+  background: white;
+  border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
 .auth-form h2 {
-  text-align: center;
   margin-bottom: 10px;
+  text-align: center;
 }
 
 .auth-form input {
@@ -44,7 +62,6 @@ body {
   padding: 12px;
   border: 1px solid #d0d5dd;
   border-radius: 8px;
-  font-size: 16px;
   outline: none;
 }
 
@@ -59,7 +76,6 @@ body {
   background: #2563eb;
   color: white;
   font-size: 16px;
-  cursor: pointer;
 }
 
 .auth-form button:hover {
@@ -69,7 +85,7 @@ body {
 .auth-link {
   text-align: center;
   font-size: 14px;
-  color: #555;
+  color: #667085;
 }
 
 .auth-link span {
@@ -80,4 +96,700 @@ body {
 
 .auth-link span:hover {
   text-decoration: underline;
+}
+
+/* =========================
+   ERROR & LOADING
+========================= */
+
+.error-message {
+  margin-top: 10px;
+  padding: 10px;
+  background: #fee2e2;
+  border-radius: 8px;
+  color: #b91c1c;
+}
+
+.page-message,
+.interview-message,
+.result-message {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  font-size: 18px;
+}
+
+/* =========================
+   INTERVIEW SETUP
+========================= */
+
+.setup-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.setup-form {
+  width: 100%;
+  max-width: 500px;
+  padding: 40px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.setup-form h2 {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.setup-description {
+  margin-bottom: 30px;
+  text-align: center;
+  color: #667085;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  font-weight: 600;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d0d5dd;
+  border-radius: 8px;
+  outline: none;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #2563eb;
+}
+
+.start-button {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  font-weight: 600;
+}
+
+.start-button:hover {
+  background: #1d4ed8;
+}
+
+.start-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* =========================
+   ACTIVE INTERVIEW
+========================= */
+
+.interview-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 20px;
+}
+
+.interview-card {
+  width: 100%;
+  max-width: 800px;
+  padding: 35px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.interview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.interview-header h2 {
+  margin-bottom: 5px;
+}
+
+.interview-header p {
+  color: #667085;
+}
+
+.interview-header span {
+  color: #475467;
+  font-weight: 600;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  margin: 25px 0;
+  overflow: hidden;
+  background: #e5e7eb;
+  border-radius: 20px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #2563eb;
+  border-radius: 20px;
+  transition: width 0.3s ease;
+}
+
+.question-section {
+  margin-bottom: 25px;
+}
+
+.question-section h3 {
+  margin-bottom: 15px;
+  font-size: 22px;
+  line-height: 1.5;
+}
+
+.read-button {
+  padding: 9px 14px;
+  border: 1px solid #d0d5dd;
+  border-radius: 8px;
+  background: white;
+}
+
+.read-button:hover {
+  background: #f9fafb;
+}
+
+.interview-card textarea {
+  width: 100%;
+  min-height: 180px;
+  padding: 15px;
+  border: 1px solid #d0d5dd;
+  border-radius: 10px;
+  outline: none;
+  resize: vertical;
+}
+
+.interview-card textarea:focus {
+  border-color: #2563eb;
+}
+
+.interview-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.skip-button,
+.submit-answer-button {
+  padding: 12px 20px;
+  border-radius: 8px;
+}
+
+.skip-button {
+  border: 1px solid #d0d5dd;
+  background: white;
+}
+
+.skip-button:hover {
+  background: #f9fafb;
+}
+
+.submit-answer-button {
+  border: none;
+  background: #2563eb;
+  color: white;
+}
+
+.submit-answer-button:hover {
+  background: #1d4ed8;
+}
+
+.skip-button:disabled,
+.submit-answer-button:disabled,
+.read-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* =========================
+   MY INTERVIEWS
+========================= */
+
+.my-interviews-container {
+  min-height: 100vh;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 48px 24px;
+}
+
+.my-interviews-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.my-interviews-header h1 {
+  margin-bottom: 8px;
+  font-size: 32px;
+}
+
+.my-interviews-header p {
+  color: #667085;
+}
+
+.new-interview-button {
+  padding: 12px 18px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.new-interview-button:hover {
+  background: #1d4ed8;
+}
+
+/* Desktop: 3 cards */
+.interviews-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.interview-item {
+  display: flex;
+  flex-direction: column;
+  min-height: 245px;
+  padding: 24px;
+  background: white;
+  border: 1px solid #e4e7ec;
+  border-radius: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.interview-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(16, 24, 40, 0.08);
+}
+
+.interview-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.interview-item-header h2 {
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+.status {
+  flex-shrink: 0;
+  padding: 5px 9px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.status.completed {
+  background: #ecfdf3;
+  color: #027a48;
+}
+
+.status.in-progress {
+  background: #fffaeb;
+  color: #b54708;
+}
+
+.interview-meta {
+  margin: 12px 0 22px;
+  color: #667085;
+  font-size: 14px;
+}
+
+.completed-info,
+.in-progress-info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  border-top: 1px solid #eaecf0;
+  padding-top: 18px;
+}
+
+.score {
+  margin-bottom: 4px;
+  color: #667085;
+  font-size: 13px;
+}
+
+.completed-info h3 {
+  margin-bottom: 18px;
+  font-size: 26px;
+}
+
+.completed-info h3 span {
+  color: #98a2b3;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.in-progress-info p {
+  color: #667085;
+  font-size: 14px;
+}
+
+.view-result-button,
+.continue-button {
+  width: 100%;
+  margin-top: auto;
+  padding: 11px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.view-result-button {
+  border: none;
+  background: #2563eb;
+  color: white;
+}
+
+.view-result-button:hover {
+  background: #1d4ed8;
+}
+
+.continue-button {
+  border: 1px solid #d0d5dd;
+  background: white;
+  color: #344054;
+}
+
+.continue-button:hover {
+  background: #f9fafb;
+}
+
+.empty-state {
+  max-width: 500px;
+  margin: 80px auto;
+  padding: 45px 30px;
+  text-align: center;
+  background: white;
+  border: 1px solid #e4e7ec;
+  border-radius: 12px;
+}
+
+.empty-state h2 {
+  margin-bottom: 10px;
+}
+
+.empty-state p {
+  margin-bottom: 24px;
+  color: #667085;
+}
+
+.empty-state button {
+  padding: 11px 18px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  font-weight: 600;
+}
+
+/* =========================
+   INTERVIEW RESULT
+========================= */
+
+.result-container {
+  min-height: 100vh;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.result-header {
+  margin-bottom: 30px;
+}
+
+.back-button {
+  margin-bottom: 25px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #2563eb;
+  font-size: 15px;
+}
+
+.back-button:hover {
+  text-decoration: underline;
+}
+
+.result-title h1 {
+  margin-bottom: 8px;
+  font-size: 32px;
+}
+
+.result-title p {
+  color: #667085;
+}
+
+.overall-result {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 25px;
+  margin-bottom: 40px;
+}
+
+.overall-score,
+.overall-feedback {
+  padding: 25px;
+  background: white;
+  border: 1px solid #e4e7ec;
+  border-radius: 14px;
+}
+
+.score-label {
+  color: #667085;
+  font-size: 14px;
+}
+
+.overall-score h2 {
+  margin-top: 10px;
+  color: #2563eb;
+  font-size: 42px;
+}
+
+.overall-score h2 span {
+  margin-left: 5px;
+  color: #667085;
+  font-size: 20px;
+}
+
+.overall-feedback h3 {
+  margin-bottom: 12px;
+}
+
+.overall-feedback p {
+  color: #475467;
+  line-height: 1.6;
+  white-space: pre-line;
+}
+
+.question-results > h2 {
+  margin-bottom: 20px;
+}
+
+.result-question-card {
+  margin-bottom: 20px;
+  padding: 25px;
+  background: white;
+  border: 1px solid #e4e7ec;
+  border-radius: 14px;
+}
+
+.question-result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 18px;
+}
+
+.question-number {
+  color: #667085;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.question-score,
+.skipped-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.question-score {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.skipped-badge {
+  background: #fffaeb;
+  color: #b54708;
+}
+
+.result-question-card h3 {
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.answer-section {
+  padding: 18px;
+  background: #f9fafb;
+  border-radius: 10px;
+}
+
+.answer-section h4 {
+  margin-bottom: 10px;
+}
+
+.answer-section p {
+  color: #475467;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.skipped-answer {
+  padding: 15px;
+  background: #fffaeb;
+  border-radius: 10px;
+  color: #b54708;
+}
+
+.result-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.result-new-interview-button,
+.result-history-button {
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+.result-new-interview-button {
+  border: none;
+  background: #2563eb;
+  color: white;
+}
+
+.result-history-button {
+  border: 1px solid #d0d5dd;
+  background: white;
+  color: #344054;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+/* Tablet */
+@media (max-width: 1000px) {
+  .interviews-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .overall-result {
+    grid-template-columns: 1fr;
+  }
+
+  .result-actions {
+    flex-direction: column;
+  }
+
+  .result-new-interview-button,
+  .result-history-button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 650px) {
+  .my-interviews-container {
+    padding: 32px 16px;
+  }
+
+  .my-interviews-header {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 28px;
+  }
+
+  .my-interviews-header h1 {
+    font-size: 28px;
+  }
+
+  .new-interview-button {
+    width: 100%;
+  }
+
+  .interviews-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .interview-item {
+    min-height: 230px;
+  }
+}
+
+@media (max-width: 600px) {
+  .auth-form,
+  .setup-form {
+    padding: 25px;
+  }
+
+  .interview-card {
+    padding: 22px;
+  }
+
+  .interview-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .interview-actions {
+    flex-direction: column;
+  }
+
+  .skip-button,
+  .submit-answer-button {
+    width: 100%;
+  }
+
+  .result-container {
+    padding: 30px 16px;
+  }
+
+  .result-title h1 {
+    font-size: 27px;
+  }
+
+  .result-question-card {
+    padding: 20px;
+  }
+
+  .question-result-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 }

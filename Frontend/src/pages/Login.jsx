@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import api from "../services/api";
+import api from "../services/api.js";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -22,8 +22,8 @@ const Login = () => {
 
     try {
       const { data } = await api.post("/auth/login", form);
-
-      localStorage.setItem("token", data.token);
+      console.log(data)
+      localStorage.setItem("token", data.Login.Token);
 
       navigate("/interview");
     } catch (error) {

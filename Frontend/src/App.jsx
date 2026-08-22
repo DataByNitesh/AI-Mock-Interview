@@ -2,18 +2,10 @@ import { BrowserRouter, Routes, Route } from "react-router";
 
 import Register from "./pages/Register.jsx";
 import Login from "./pages/Login.jsx";
-
-function InterviewSetup() {
-  return <h1>Interview Setup</h1>;
-}
-
-function Interview() {
-  return <h1>Interview</h1>;
-}
-
-function MyInterviews() {
-  return <h1>My Interviews</h1>;
-}
+import InterviewSetup from "./pages/InterviewSetup.jsx";
+import Interview from "./pages/Interview.jsx";
+import MyInterviews from "./pages/MyInterviews.jsx";
+import InterviewResult from "./pages/InterviewResult.jsx";
 
 function App() {
   return (
@@ -24,6 +16,7 @@ function App() {
         <Route path="/interview" element={<InterviewSetup />} />
         <Route path="/interview/:id" element={<Interview />} />
         <Route path="/my-interviews" element={<MyInterviews />} />
+        <Route path="/interview/:id/result" element={<InterviewResult />} />
       </Routes>
     </BrowserRouter>
   );
