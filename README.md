@@ -14,7 +14,6 @@ A full-stack AI-powered mock interview application that allows users to practice
 - Submit answers and receive AI-based evaluation
 - Skip questions during an interview
 - Text-to-speech to read interview questions aloud
-- Speech-to-text for answering questions using voice
 - Individual question scores and feedback
 - Overall interview score
 - View completed interview results
