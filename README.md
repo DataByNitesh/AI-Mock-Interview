@@ -1,57 +1,137 @@
-# AI Mock Interview
+Here's the complete README — just copy paste the whole thing:
 
-A full-stack AI-powered mock interview application that allows users to practice interviews with dynamically generated questions, AI-based answer evaluation, scores, and feedback.
+```markdown
+# AI Mock Interview 🤖
 
-## Features
+> A full-stack AI-powered mock interview platform that generates role-specific questions, evaluates your answers, and gives detailed scores and feedback using Google Gemini AI.
 
-- User registration and login
-- JWT authentication and protected routes
-- Create interviews based on:
-  - Job role
-  - Difficulty level
-  - Number of questions
-- AI-generated interview questions using Gemini API
-- Submit answers and receive AI-based evaluation
-- Skip questions during an interview
-- Text-to-speech to read interview questions aloud
-- Individual question scores and feedback
-- Overall interview score
-- View completed interview results
-- View and continue previous interviews
-- Interview history stored in MongoDB
+🔗 **[Live Demo](https://aiinterview-xi.vercel.app/)** | 📂 **[GitHub](https://github.com/DataByNitesh/AI-Mock-Interview)**
 
-## Tech Stack
+---
 
-**Frontend**
-- React
-- React Router
-- Axios
-- Web Speech API
+## 🔐 Demo Credentials
 
-**Backend**
-- Node.js
-- Express.js
-- MongoDB
-- Mongoose
-- JWT
-- Gemini API
-- REST APIs
+**Email:** demo@test.com
+**Password:** demo@password
 
-## How It Works
+---
 
-1. User registers or logs in.
-2. User selects a job role, difficulty level, and number of questions.
-3. Gemini AI generates interview questions.
-4. User answers using text or speech-to-text.
-5. The user can listen to questions using text-to-speech.
-6. AI evaluates submitted answers.
-7. Scores and feedback are stored in MongoDB.
-8. The user can review completed interviews and previous results.
+## ✨ Features
 
-## API Endpoints
+### Interview
+- Choose **job role**, **difficulty level**, and **number of questions**
+- Gemini AI generates role-specific interview questions dynamically
+- Answer by **typing** or using **speech-to-text**
+- **Read question aloud** via text-to-speech (manual trigger)
+- **Skip questions** you don't want to answer
+- Progress bar tracks interview completion
 
-### Authentication
+### Results & History
+- Overall score with detailed AI feedback
+- Individual score and feedback per question
+- Skipped questions counted as 0 — no loopholes
+- View all previous interviews in **My Interviews**
+- Each user sees only their own interview history
 
-```text
-POST /auth/register
-POST /auth/login
+### Auth & Security
+- JWT authentication with protected routes
+- User-specific data — no cross-user data exposure
+- Protected backend APIs on all interview endpoints
+
+---
+
+## 🛠 Tech Stack
+
+### Frontend
+- React.js, Tailwind CSS, Axios, React Router
+
+### Backend
+- Node.js, Express.js, MongoDB, Mongoose, JWT
+
+### AI & APIs
+- Google Gemini API (question generation + answer evaluation)
+- Web Speech API (text-to-speech + speech-to-text)
+
+---
+
+## 🌐 Architecture
+
+```
+┌──────────────────┐
+│  Vercel Frontend │
+└────────┬─────────┘
+         │ Axios
+         ▼
+┌──────────────────┐
+│  Render Backend  │
+└───────┬──────────┘
+        │
+┌───────┴────────┐
+▼                ▼
+MongoDB      Gemini AI
+```
+
+---
+
+## 🚀 Local Setup
+
+```bash
+git clone https://github.com/DataByNitesh/AI-Mock-Interview
+cd AI-Mock-Interview
+```
+
+### Backend
+```bash
+cd backend
+npm install
+npm run dev
+```
+
+### Backend .env
+```
+PORT=5000
+MONGO_URI=your_mongodb_uri
+JWT_SECRET=your_jwt_secret
+GEMINI_API_KEY=your_gemini_api_key
+```
+
+### Frontend
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+### Frontend .env
+```
+VITE_API_BASE_URL=http://localhost:5000
+```
+
+---
+
+## 📁 Project Structure
+
+```
+AI-Mock-Interview/
+├── backend/
+│   ├── controllers/
+│   ├── routes/
+│   ├── models/
+│   └── middleware/
+└── frontend/
+    └── src/
+        ├── components/
+        └── pages/
+```
+
+---
+
+## 🌐 Deployment
+Frontend → Vercel | Backend → Render
+
+---
+
+Built with ❤️ by [Nitesh Kadam](https://github.com/DataByNitesh)
+```
+
+Done — one block, copy paste the whole thing. 🎯
