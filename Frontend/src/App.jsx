@@ -1,6 +1,7 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router";
+import { BrowserRouter, Routes, Route } from "react-router";
 import { Toaster } from "react-hot-toast";
 
+import Navbar from "./components/Navbar.jsx";
 import Home from "./pages/Home.jsx";
 import Register from "./pages/Register.jsx";
 import Login from "./pages/Login.jsx";
@@ -26,6 +27,9 @@ function App() {
           },
         }}
       />
+
+      <Navbar />
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
