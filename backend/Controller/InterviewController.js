@@ -204,7 +204,17 @@ export const finishInterview = async (req, res) => {
       }
     });
 
-    interview.overallScore = evaluation.overallScore;
+    const totalQuestions = interview.Questions.length;
+
+    const totalScore = evaluation.evaluations.reduce(
+      (sum, item) => sum + (Number(item.score) || 0),
+      0,
+    );
+
+    const overallScore =
+      totalQuestions > 0 ? Number((totalScore / totalQuestions).toFixed(2)) : 0;
+
+    interview.overallScore = overallScore;
     interview.overallFeedback = evaluation.overallFeedback;
     interview.status = "completed";
 
