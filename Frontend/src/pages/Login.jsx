@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import toast from "react-hot-toast";
 import api from "../services/api.js";
 
 const Login = () => {
@@ -9,6 +10,8 @@ const Login = () => {
     email: "",
     password: "",
   });
+
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setForm({
@@ -21,9 +24,24 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const { data } = await api.post("/auth/login", form);
+      setLoading(true);
 
-      console.log(data);
+      const loginRequest = api.post("/auth/login", form);
+
+      const { data } = await toast.promise(
+        loginRequest,
+        {
+          loading: "Authenticating securely...",
+          success: (res) => `Welcome back, ${res.data.Login.Name}!`,
+          error: (error) =>
+            error.response?.data?.message || "Failed to log in. Try again.",
+        },
+        {
+          style: {
+            minWidth: "320px",
+          },
+        },
+      );
 
       localStorage.setItem("token", data.Login.Token);
       localStorage.setItem(
@@ -36,7 +54,9 @@ const Login = () => {
 
       navigate("/");
     } catch (error) {
-      console.error(error.response?.data?.message || "Error logging in");
+      console.error(error?.response?.data?.message || "Error logging in");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -99,9 +119,10 @@ const Login = () => {
 
           <button
             type="submit"
-            className="mt-7 w-full rounded-lg bg-blue-600 px-5 py-3 font-semibold text-white transition-all duration-200 hover:bg-blue-500 hover:shadow-lg hover:shadow-blue-500/20"
+            disabled={loading}
+            className="mt-7 w-full rounded-lg bg-blue-600 px-5 py-3 font-semibold text-white transition-all duration-200 hover:bg-blue-500 hover:shadow-lg hover:shadow-blue-500/20 disabled:cursor-not-allowed disabled:opacity-60"
           >
-            Login
+            {loading ? "Logging in..." : "Login"}
           </button>
 
           <p className="mt-6 text-center text-sm text-slate-400">
