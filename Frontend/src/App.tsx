@@ -1,14 +1,14 @@
 import { BrowserRouter, Routes, Route } from "react-router";
 import { Toaster } from "react-hot-toast";
 
-import Navbar from "./components/Navbar.jsx";
-import Home from "./pages/Home.jsx";
-import Register from "./pages/Register.jsx";
-import Login from "./pages/Login.jsx";
-import InterviewSetup from "./pages/InterviewSetup.jsx";
-import Interview from "./pages/Interview.jsx";
-import MyInterviews from "./pages/MyInterviews.jsx";
-import InterviewResult from "./pages/InterviewResult.jsx";
+import Navbar from "./components/Navbar.tsx";
+import Home from "./pages/Home.tsx";
+import Register from "./pages/Register.tsx";
+import Login from "./pages/Login.tsx";
+import InterviewSetup from "./pages/InterviewSetup.tsx";
+import Interview from "./pages/Interview.tsx";
+import MyInterviews from "./pages/MyInterviews.tsx";
+import InterviewResult from "./pages/InterviewResult.tsx";
 
 function App() {
   return (
@@ -17,12 +17,12 @@ function App() {
         position="top-center"
         toastOptions={{
           style: {
-            background: "#0f172a",
-            color: "#f8fafc",
-            border: "1px solid #1e3a5f",
-            padding: "16px 20px",
-            borderRadius: "12px",
-            fontSize: "15px",
+            background: "#ffffff",
+            color: "#1c1917",
+            border: "1px solid #e7e5e4",
+            padding: "12px 16px",
+            borderRadius: "8px",
+            fontSize: "14px",
             fontWeight: "500",
           },
         }}

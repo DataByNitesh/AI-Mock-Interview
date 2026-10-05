@@ -1,26 +1,28 @@
 import { useEffect, useState } from "react";
+import type { ChangeEvent } from "react";
 import { useNavigate, useParams } from "react-router";
 import toast from "react-hot-toast";
-import api from "../services/api";
+import api from "../services/api.ts";
+import type { Interview, InterviewResponse } from "../types";
 
 const Interview = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [interview, setInterview] = useState(null);
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [answer, setAnswer] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState("");
+  const [interview, setInterview] = useState<Interview | null>(null);
+  const [currentQuestion, setCurrentQuestion] = useState<number>(0);
+  const [answer, setAnswer] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(true);
+  const [submitting, setSubmitting] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
 
   // Read aloud is OFF by default.
-  const [readAloud, setReadAloud] = useState(false);
+  const [readAloud, setReadAloud] = useState<boolean>(false);
 
   useEffect(() => {
     const getInterview = async () => {
       try {
-        const { data } = await api.get(`/interview/${id}`);
+        const { data } = await api.get<InterviewResponse>(`/interview/${id}`);
 
         setInterview(data.interview);
       } catch (error) {
@@ -40,7 +42,7 @@ const Interview = () => {
     };
   }, [currentQuestion]);
 
-  const speakQuestion = (question) => {
+  const speakQuestion = (question: string) => {
     if (!readAloud) {
       return;
     }
@@ -89,7 +91,7 @@ const Interview = () => {
         answer: answer.trim(),
       });
 
-      if (currentQuestion === interview.Questions.length - 1) {
+      if (currentQuestion === interview!.Questions.length - 1) {
         await handleFinishInterview();
         return;
       }
@@ -111,7 +113,7 @@ const Interview = () => {
         questionIndex: currentQuestion,
       });
 
-      if (currentQuestion === interview.Questions.length - 1) {
+      if (currentQuestion === interview!.Questions.length - 1) {
         await handleFinishInterview();
         return;
       }
@@ -157,7 +159,7 @@ const Interview = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-950 text-slate-300">
+      <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center bg-canvas text-sm text-muted">
         Loading interview...
       </div>
     );
@@ -165,119 +167,127 @@ const Interview = () => {
 
   if (error && !interview) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-950 text-red-400">
+      <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center bg-canvas px-4 text-sm text-red-700">
         {error}
       </div>
     );
   }
 
-  const question = interview.Questions[currentQuestion];
+  const question = interview!.Questions[currentQuestion];
 
-  const progress = ((currentQuestion + 1) / interview.Questions.length) * 100;
+  const progress =
+    ((currentQuestion + 1) / interview!.Questions.length) * 100;
 
   return (
-    <div className="min-h-screen bg-slate-950 px-4 py-8 text-slate-100">
-      <div className="mx-auto w-full max-w-3xl">
-        <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-xl sm:p-8">
-          {/* HEADER */}
-          <div className="flex flex-col gap-4 border-b border-slate-800 pb-6 sm:flex-row sm:items-start sm:justify-between">
-            <div>
-              <p className="mb-2 text-sm font-medium text-blue-400">
-                AI Mock Interview
-              </p>
+    <main className="min-h-[calc(100vh-4rem)] bg-canvas">
+      <div className="app-shell py-10">
+        <div className="mx-auto w-full max-w-3xl">
+          <div className="card p-6 sm:p-8">
+            {/* HEADER */}
+            <div className="flex flex-col gap-4 border-b border-line pb-6 sm:flex-row sm:items-start sm:justify-between">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wider text-brand-700">
+                  InterviewAI
+                </p>
 
-              <h1 className="text-2xl font-bold text-white sm:text-3xl">
-                {interview.Role} Interview
-              </h1>
+                <h1 className="mt-2 text-2xl font-bold tracking-tight text-ink">
+                  {interview!.Role} Interview
+                </h1>
 
-              <p className="mt-1 text-sm text-slate-400">
-                Difficulty: {interview.Difficulty}
-              </p>
+                <p className="mt-1.5 text-sm text-muted">
+                  Difficulty:{" "}
+                  <span className="font-medium text-ink-soft">
+                    {interview!.Difficulty}
+                  </span>
+                </p>
+              </div>
+
+              <span className="w-fit rounded-md border border-line bg-canvas px-3 py-1.5 text-xs font-medium tabular-nums text-ink-soft">
+                Question {currentQuestion + 1} of {interview!.Questions.length}
+              </span>
             </div>
-
-            <span className="w-fit rounded-full border border-slate-700 px-4 py-2 text-sm text-slate-300">
-              Question {currentQuestion + 1} of {interview.Questions.length}
-            </span>
-          </div>
 
           {/* PROGRESS */}
           <div className="mt-5">
-            <div className="mb-2 flex justify-between text-xs text-slate-400">
+            <div className="mb-2 flex justify-between text-xs text-muted">
               <span>Progress</span>
-              <span>{Math.round(progress)}%</span>
+              <span className="tabular-nums">{Math.round(progress)}%</span>
             </div>
 
-            <div className="h-2 overflow-hidden rounded-full bg-slate-800">
+            <div className="h-1.5 overflow-hidden rounded-full bg-line">
               <div
-                className="h-full rounded-full bg-blue-600 transition-all duration-300"
+                className="h-full rounded-full bg-brand-600 transition-all duration-300"
                 style={{ width: `${progress}%` }}
               />
             </div>
           </div>
 
           {/* QUESTION */}
-          <div className="mt-7 rounded-xl border border-slate-800 bg-slate-950 p-6">
-            <div className="mb-5 flex items-center justify-between gap-4">
-              <span className="text-sm font-semibold text-blue-400">
+          <div className="mt-6 rounded-lg border border-line bg-canvas p-5">
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+              <span className="text-xs font-semibold uppercase tracking-wider text-brand-700">
                 Question {currentQuestion + 1}
               </span>
 
               {/* READ ALOUD CONTROL */}
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2">
                 <button
                   type="button"
                   onClick={toggleReadAloud}
-                  className={`rounded-lg border px-3 py-2 text-sm font-medium transition ${
+                  className={`rounded-md border px-3 py-1.5 text-xs font-medium transition-colors duration-150 ${
                     readAloud
-                      ? "border-blue-500 bg-blue-500/10 text-blue-400"
-                      : "border-slate-700 bg-slate-900 text-slate-400 hover:border-slate-600 hover:text-slate-200"
+                      ? "border-brand-200 bg-brand-50 text-brand-700"
+                      : "border-line-strong bg-surface text-muted hover:text-ink"
                   }`}
                 >
-                  {readAloud ? "🔊 Read Aloud: On" : "🔇 Read Aloud: Off"}
+                  {readAloud ? "Read aloud: on" : "Read aloud: off"}
                 </button>
 
                 {readAloud && (
                   <button
                     type="button"
                     onClick={() => speakQuestion(question.question)}
-                    className="rounded-lg border border-slate-700 px-3 py-2 text-sm font-medium text-slate-300 transition hover:border-blue-500 hover:text-blue-400"
+                    className="rounded-md border border-line-strong bg-surface px-3 py-1.5 text-xs font-medium text-ink-soft transition-colors duration-150 hover:border-brand-500 hover:text-brand-700"
                   >
-                    🔊 Read Again
+                    Read again
                   </button>
                 )}
               </div>
             </div>
 
-            <h2 className="text-xl font-semibold leading-relaxed text-white sm:text-2xl">
+            <h2 className="text-lg font-medium leading-7 text-ink sm:text-xl">
               {question.question}
             </h2>
           </div>
 
           {/* ANSWER */}
-          <div className="mt-6">
-            <label className="mb-2 block text-sm font-medium text-slate-300">
+          <div className="mt-5">
+            <label htmlFor="answer" className="field-label">
               Your Answer
             </label>
 
             <textarea
+              id="answer"
               placeholder="Type your answer here..."
               value={answer}
-              onChange={(e) => setAnswer(e.target.value)}
+              onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+                setAnswer(e.target.value)
+              }
               disabled={submitting}
-              className="min-h-[180px] w-full resize-y rounded-xl border border-slate-700 bg-slate-950 p-4 text-sm leading-relaxed text-white outline-none transition placeholder:text-slate-600 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 disabled:cursor-not-allowed disabled:opacity-60"
+              className="field-control min-h-[160px] resize-y leading-6"
             />
           </div>
 
           {/* ERROR */}
-          {error && <p className="mt-3 text-sm text-red-400">{error}</p>}
+          {error && <p className="mt-3 text-sm text-red-700">{error}</p>}
 
           {/* ACTIONS */}
-          <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+          <div className="mt-6 flex flex-col-reverse gap-3 border-t border-line pt-6 sm:flex-row sm:justify-end">
             <button
               type="button"
               onClick={handleSkipQuestion}
               disabled={submitting}
-              className="rounded-lg border border-yellow-600/60 bg-yellow-500/5 px-6 py-3 font-semibold text-yellow-400 transition hover:border-yellow-500 hover:bg-yellow-500/10 disabled:cursor-not-allowed disabled:opacity-50"
+              className="btn btn-secondary"
             >
               Skip
             </button>
@@ -286,18 +296,19 @@ const Interview = () => {
               type="button"
               onClick={handleSubmitAnswer}
               disabled={submitting}
-              className="rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-50"
+              className="btn btn-primary"
             >
               {submitting
                 ? "Saving..."
-                : currentQuestion === interview.Questions.length - 1
+                : currentQuestion === interview!.Questions.length - 1
                   ? "Submit & Finish"
                   : "Submit Answer"}
             </button>
           </div>
+          </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 

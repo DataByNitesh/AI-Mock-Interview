@@ -1,32 +1,34 @@
 import { useState } from "react";
+import type { ChangeEvent, FormEvent } from "react";
 import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
-import api from "../services/api.js";
+import api from "../services/api.ts";
+import type { LoginForm, LoginResponse } from "../types";
 
 const Login = () => {
   const navigate = useNavigate();
 
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<LoginForm>({
     email: "",
     password: "",
   });
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setForm({
       ...form,
       [e.target.name]: e.target.value,
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
       setLoading(true);
 
-      const loginRequest = api.post("/auth/login", form);
+      const loginRequest = api.post<LoginResponse>("/auth/login", form);
 
       const { data } = await toast.promise(
         loginRequest,
@@ -61,26 +63,26 @@ const Login = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-950 px-6 py-12">
-      <div className="w-full max-w-md">
-        <form
-          className="rounded-2xl border border-slate-800 bg-slate-900 p-8 shadow-xl"
-          onSubmit={handleSubmit}
-        >
-          <div className="mb-8 text-center">
-            <h2 className="text-3xl font-bold text-white">Welcome Back</h2>
+    <main className="flex min-h-[calc(100vh-4rem)] items-center justify-center bg-canvas px-6 py-12">
+      <div className="w-full max-w-sm">
+        <form className="card p-6 sm:p-8" onSubmit={handleSubmit}>
+          <div className="mb-7">
+            <p className="text-xs font-semibold uppercase tracking-wider text-brand-700">
+              InterviewAI
+            </p>
 
-            <p className="mt-2 text-sm text-slate-400">
+            <h1 className="mt-2 text-xl font-bold tracking-tight text-ink">
+              Welcome back
+            </h1>
+
+            <p className="mt-1.5 text-sm text-muted">
               Login to continue your interview practice
             </p>
           </div>
 
-          <div className="space-y-5">
+          <div className="space-y-4">
             <div>
-              <label
-                htmlFor="email"
-                className="mb-2 block text-sm font-medium text-slate-300"
-              >
+              <label htmlFor="email" className="field-label">
                 Email
               </label>
 
@@ -92,15 +94,12 @@ const Login = () => {
                 value={form.email}
                 onChange={handleChange}
                 required
-                className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
+                className="field-control"
               />
             </div>
 
             <div>
-              <label
-                htmlFor="password"
-                className="mb-2 block text-sm font-medium text-slate-300"
-              >
+              <label htmlFor="password" className="field-label">
                 Password
               </label>
 
@@ -112,31 +111,28 @@ const Login = () => {
                 value={form.password}
                 onChange={handleChange}
                 required
-                className="w-full rounded-lg border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20"
+                className="field-control"
               />
             </div>
           </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="mt-7 w-full rounded-lg bg-blue-600 px-5 py-3 font-semibold text-white transition-all duration-200 hover:bg-blue-500 hover:shadow-lg hover:shadow-blue-500/20 disabled:cursor-not-allowed disabled:opacity-60"
-          >
+          <button type="submit" disabled={loading} className="btn btn-primary mt-6 w-full">
             {loading ? "Logging in..." : "Login"}
           </button>
 
-          <p className="mt-6 text-center text-sm text-slate-400">
+          <p className="mt-6 text-center text-sm text-muted">
             Don't have an account?{" "}
-            <span
+            <button
+              type="button"
               onClick={() => navigate("/register")}
-              className="cursor-pointer font-medium text-blue-400 transition-colors hover:text-blue-300"
+              className="font-medium text-brand-700 transition-colors duration-150 hover:text-brand-600"
             >
               Register
-            </span>
+            </button>
           </p>
         </form>
       </div>
-    </div>
+    </main>
   );
 };
 
